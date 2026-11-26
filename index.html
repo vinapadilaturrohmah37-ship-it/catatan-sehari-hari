@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PARKIRKU - Smart Parking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <section id="loginPage" class="auth-container">
+    <div class="auth-card">
+      <div class="logo">🚗</div>
+      <h1>PARKIRKU</h1>
+      <p class="subtitle">Smart Parking Management System</p>
+
+      <div class="tabs">
+        <button type="button" id="adminTab" class="active">Admin</button>
+        <button type="button" id="customerTab">Pelanggan</button>
+      </div>
+
+      <form id="loginForm">
+        <h3>Login Admin</h3>
+        <input id="username" placeholder="Username Admin" required>
+        <input id="password" type="password" placeholder="Password Admin" required>
+        <button class="primary-btn">MASUK ADMIN</button>
+        <small>Demo: admin / 12345</small>
+        <p id="loginError" class="error"></p>
+      </form>
+
+      <form id="customerLoginForm" class="hidden">
+        <h3>Login Pelanggan</h3>
+        <input id="customerUsername" placeholder="Username" required>
+        <input id="customerPassword" type="password" placeholder="Password" required>
+        <button class="primary-btn">MASUK PELANGGAN</button>
+        <p class="switch">Belum punya akun?
+          <a href="#" id="showRegister">Daftar sekarang</a>
+        </p>
+        <p id="customerLoginError" class="error"></p>
+      </form>
+
+      <form id="registerForm" class="hidden">
+        <h3>Daftar Pelanggan</h3>
+        <input id="registerName" placeholder="Nama lengkap" required>
+        <input id="registerUsername" placeholder="Username" required>
+        <input id="registerPassword" type="password" placeholder="Password minimal 6 karakter" required minlength="6">
+        <input id="registerPlate" placeholder="Nomor polisi kendaraan" required>
+        <button class="primary-btn">DAFTAR SEKARANG</button>
+        <p class="switch">Sudah punya akun?
+          <a href="#" id="showCustomerLogin">Login di sini</a>
+        </p>
+        <p id="registerMessage" class="error"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- DASHBOARD ADMIN -->
+  <main id="appPage" class="hidden">
+    <div class="dashboard">
+      <header>
+        <div>
+          <h2>🚗 PARKIRKU</h2>
+          <p>Dashboard Admin</p>
+        </div>
+        <button id="logoutBtn" class="logout">Keluar</button>
+      </header>
+
+      <section class="welcome">
+        <h2>Dashboard Parkir</h2>
+        <p id="today"></p>
+      </section>
+
+      <section class="stats">
+        <div class="stat-card">
+          <span>🅿️</span>
+          <p>Total Kendaraan</p>
+          <h2 id="totalMasuk">0</h2>
+        </div>
+        <div class="stat-card">
+          <span>🚙</span>
+          <p>Masih Parkir</p>
+          <h2 id="totalAktif">0</h2>
+        </div>
+        <div class="stat-card">
+          <span>💰</span>
+          <p>Pendapatan</p>
+          <h2 id="totalPendapatan">Rp0</h2>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3>+ Input Kendaraan Masuk</h3>
+        <form id="parkingForm">
+          <label>Nomor Polisi</label>
+          <input id="plat" placeholder="B 1234 ABC" required>
+
+          <label>Jenis Kendaraan</label>
+          <select id="jenis">
+            <option value="Motor">Motor</option>
+            <option value="Mobil">Mobil</option>
+          </select>
+
+          <button class="primary-btn">SIMPAN KENDARAAN</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h3>📋 Data Kendaraan Parkir</h3>
+        <input id="search" placeholder="Cari nomor polisi...">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>No</th><th>Plat</th><th>Jenis</th>
+                <th>Waktu Masuk</th><th>Status</th><th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="parkingList"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3>📜 Riwayat Parkir</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Plat</th><th>Jenis</th><th>Waktu Keluar</th><th>Biaya</th>
+              </tr>
+            </thead>
+            <tbody id="historyList"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- DASHBOARD PELANGGAN -->
+  <main id="customerPage" class="hidden">
+    <div class="dashboard">
+      <header>
+        <div>
+          <h2>🚗 PARKIRKU</h2>
+          <p>Dashboard Pelanggan</p>
+        </div>
+        <button id="customerLogoutBtn" class="logout">Keluar</button>
+      </header>
+
+      <section class="welcome">
+        <h2>Halo, <span id="customerName"></span>!</h2>
+        <p>Selamat datang di PARKIRKU.</p>
+      </section>
+
+      <section class="panel">
+        <h3>🚘 Informasi Kendaraan</h3>
+        <p>Nomor polisi: <strong id="customerPlate"></strong></p>
+        <p>Jenis kendaraan: <strong id="customerVehicleType"></strong></p>
+        <p>Status: <strong id="customerVehicleStatus"></strong></p>
+      </section>
+
+      <section class="panel">
+        <h3>📜 Riwayat Parkir Saya</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Plat</th><th>Jenis</th><th>Masuk</th>
+                <th>Keluar</th><th>Biaya</th>
+              </tr>
+            </thead>
+            <tbody id="customerHistoryList"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
